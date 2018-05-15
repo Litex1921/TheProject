@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheProject.DB.Entities
 {
-    class IBaseEntity <T,K>
+    public class IBaseEntity <T,K>
     {
         T Id { get; set; }
 

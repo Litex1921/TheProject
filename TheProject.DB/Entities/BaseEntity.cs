@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheProject.DB.Entities
 {
-    class BaseEntity : IBaseEntity<int, System.DateTime>
+    public class BaseEntity : IBaseEntity<int, System.DateTime>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
