@@ -21,7 +21,7 @@ namespace TheProject.DataAccess.Repositories
             }
 
             public BaseRepository() =>
-                // this constructor is automatically invoked when the default child constructor is called
+//този конструктор се извиква автоматично, когато се извиква конструктора по подразбиране
                 Context = new TheProjectDbContext();
 
             public List<T> GetAll() => Context.Set<T>().ToList();
