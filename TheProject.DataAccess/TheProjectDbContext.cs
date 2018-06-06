@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TheProject.DataAccess
 {
-    class TheProjectDbContext : DbContext
+    public class TheProjectDbContext : DbContext
     {
-       public DbSet<City> Cities { get; set; }
+        public DbSet<City> Cities { get; set; }
 
-       public DbSet<Location> Locations { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
-       public DbSet<CarsParts> Restaurants { get; set; }
+        public DbSet<CarsParts> CarsParts { get; set; }
 
         public override int SaveChanges()
         {
@@ -38,4 +38,10 @@ namespace TheProject.DataAccess
 
                 ((BaseEntity)entry.Entity).UpdatedTime = DateTime.UtcNow;
             }
+        }
+
+        public DbSet<TheProject.Web.Models.LocationsViewModel> LocationsViewModels { get; set; }
+
+        public DbSet<TheProject.Web.Models.CityViewModel> CityViewModels { get; set; }
+    }
 }

@@ -62,5 +62,4 @@ namespace TheProject.DataAccess.Repositories
                 return isDeleted;
             }
         }
-    }
 }

@@ -23,8 +23,9 @@ namespace TheProject.DB.Entities
 
         public int LocationId { get; set;  }
         [Required,ForeignKey("LocationId")]
+
         public virtual Location Location { get; set; }
 
-        
+        public object Images { get; set; }
     }
 }
