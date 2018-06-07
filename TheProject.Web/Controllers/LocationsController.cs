@@ -51,7 +51,7 @@ namespace TheProject.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = uow.LocationRepository.GetByID((int)id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -62,7 +62,15 @@ namespace TheProject.Web.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.Cities, "Id", "Name");
+            IEnumerable<City> cities = uow.CityRepository.GetAll();
+            List<CityViewModel> model = new List<CityViewModel>();
+            foreach (City city in cities)
+            {
+                CityViewModel c = new CityViewModel(city);
+                model.Add(c);
+            }
+
+            ViewBag.CityId = new SelectList(uow.CityRepository, "Id", "Name");
             return View();
         }
 
