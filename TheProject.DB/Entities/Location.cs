@@ -10,7 +10,6 @@ namespace TheProject.DB.Entities
 {
     public class Location : BaseEntity
     {
-       
         [Required, StringLength(8),DataType(DataType.PostalCode)]
         public string ZipCode { get; set; }
 

@@ -6,113 +6,139 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TheProject.DB.Entities;
 using TheProject.DataAccess;
 using TheProject.Web.Models;
 
-
 namespace TheProject.Web.Controllers
 {
-    public class LocationsViewModelsController : Controller
+    public class LocationsController : Controller
     {
         private TheProjectDbContext db = new TheProjectDbContext();
 
-        // GET: LocationsViewModels
-        public ActionResult Index()
+        private readonly UnitOfWork uow;
+
+        public LocationsController()
         {
-            return View(db.Locations.ToList());
+            uow = new UnitOfWork(new TheProjectDbContext());
         }
 
-        // GET: LocationsViewModels/Details/5
+        public LocationsController(TheProjectDbContext context)
+        {
+            uow = new UnitOfWork(context);
+        }
+
+        // GET: Locations
+        public ActionResult Index()
+        {
+            IEnumerable<Location> location = uow.LocationRepository.GetAll();
+
+            List<LocationsViewModel> locations = new List<LocationsViewModel>();
+
+            foreach(Location l in location)
+            {
+                LocationsViewModel model = new LocationsViewModel(l);
+                locations.Add(model);
+            }
+
+            return View();
+        }
+
+        // GET: Locations/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LocationsViewModel locationsViewModel = db.Locations.Find(id);
-            if (locationsViewModel == null)
+            Location location = db.Locations.Find(id);
+            if (location == null)
             {
                 return HttpNotFound();
             }
-            return View(locationsViewModel);
+            return View(location);
         }
 
-        // GET: LocationsViewModels/Create
+        // GET: Locations/Create
         public ActionResult Create()
         {
+            ViewBag.CityId = new SelectList(db.Cities, "Id", "Name");
             return View();
         }
 
-        // POST: LocationsViewModels/Create
+        // POST: Locations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ZipCode,StreetName,StreetNum,Extra,CityId,CityName,CreatedTime,UpdatedTime")] LocationsViewModel locationsViewModel)
+        public ActionResult Create([Bind(Include = "Id,ZipCode,StreetName,StreetNum,Extra,CityId,CreatedTime,UpdatedTime")] Location location)
         {
             if (ModelState.IsValid)
             {
-                db.Locations.Add(LocationsViewModel);
+                db.Locations.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(locationsViewModel);
+            ViewBag.CityId = new SelectList(db.Cities, "Id", "Name", location.CityId);
+            return View(location);
         }
 
-        // GET: LocationsViewModels/Edit/5
+        // GET: Locations/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LocationsViewModel locationsViewModel = db.LocationsViewModels.Find(id);
-            if (locationsViewModel == null)
+            Location location = db.Locations.Find(id);
+            if (location == null)
             {
                 return HttpNotFound();
             }
-            return View(locationsViewModel);
+            ViewBag.CityId = new SelectList(db.Cities, "Id", "Name", location.CityId);
+            return View(location);
         }
 
-        // POST: LocationsViewModels/Edit/5
+        // POST: Locations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ZipCode,StreetName,StreetNum,Extra,CityId,CityName,CreatedTime,UpdatedTime")] LocationsViewModel locationsViewModel)
+        public ActionResult Edit([Bind(Include = "Id,ZipCode,StreetName,StreetNum,Extra,CityId,CreatedTime,UpdatedTime")] Location location)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(locationsViewModel).State = EntityState.Modified;
+                db.Entry(location).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(locationsViewModel);
+            ViewBag.CityId = new SelectList(db.Cities, "Id", "Name", location.CityId);
+            return View(location);
         }
 
-        // GET: LocationsViewModels/Delete/5
+        // GET: Locations/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LocationsViewModel locationsViewModel = db.Locations.Find(id);
-            if (locationsViewModel == null)
+            Location location = db.Locations.Find(id);
+            if (location == null)
             {
                 return HttpNotFound();
             }
-            return View(locationsViewModel);
+            return View(location);
         }
 
-        // POST: LocationsViewModels/Delete/5
+        // POST: Locations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LocationsViewModel locationsViewModel = DB.Locations.Find(id);
-            db.Locations.Remove(Locations);
+            Location location = db.Locations.Find(id);
+            db.Locations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

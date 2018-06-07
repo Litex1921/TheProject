@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 using TheProject.DB.Entities;
 
 namespace TheProject.DataAccess.Repositories
-{     class CarsPartsRepository: BaseRepository<CarsParts>
+{    public class CarsPartsRepository: BaseRepository<CarsParts>
     {
+        private TheProject.DataAccess.TheProjectDbContext context;
+
+        public CarsPartsRepository(TheProject.DataAccess.TheProjectDbContext context)
+        {
+            this.context = context;
+        }
+
         public void Save(CarsParts carsparts)
         {
             if (carsparts.Name == null)

@@ -148,9 +148,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CityViewModelsController.cs" />
+    <Compile Include="Controllers\CarsPartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LocationsViewModelsController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,6 +206,16 @@
     <Content Include="Views\CityViewModels\Details.cshtml" />
     <Content Include="Views\CityViewModels\Edit.cshtml" />
     <Content Include="Views\CityViewModels\Index.cshtml" />
+    <Content Include="Views\CarsParts\Create.cshtml" />
+    <Content Include="Views\CarsParts\Delete.cshtml" />
+    <Content Include="Views\CarsParts\Details.cshtml" />
+    <Content Include="Views\CarsParts\Edit.cshtml" />
+    <Content Include="Views\CarsParts\Index.cshtml" />
+    <Content Include="Views\Locations\Create.cshtml" />
+    <Content Include="Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Locations\Details.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

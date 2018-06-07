@@ -2,8 +2,15 @@
 
 namespace TheProject.DataAccess.Repositories
 {
-    class LocationRepository : BaseRepository<Location>
+    public class LocationRepository : BaseRepository<Location>
     {
+        private TheProject.DataAccess.TheProjectDbContext context;
+
+        public LocationRepository(TheProject.DataAccess.TheProjectDbContext context)
+        {
+            this.context = context;
+        }
+
         public void Save(Location location)
         {
             if (location.Id == 0)

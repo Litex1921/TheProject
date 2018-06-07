@@ -35,5 +35,21 @@ namespace TheProject.Web.Models
         public string CityName { get; set; }
 
         public virtual ICollection<CarsParts> CarsParts { get; set; }
+
+        public LocationsViewModel(Location location)
+        {
+            Id = location.Id;
+            ZipCode = location.ZipCode;
+            StreetName = location.StreetName;
+            StreetNum = location.StreetNum;
+            Extra = location.Extra;
+            CityId = location.CityId;
+            CreatedTime = location.CreatedTime;
+            UpdatedTime = location.UpdatedTime;
+
+        }
+
+        public LocationsViewModel()
+        { }
     }
 }

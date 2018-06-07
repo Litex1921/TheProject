@@ -6,112 +6,117 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TheProject.DB.Entities;
 using TheProject.DataAccess;
-using TheProject.Web.Models;
 
 namespace TheProject.Web.Controllers
 {
-    public class CityViewModelsController : Controller
+    public class CarsPartsController : Controller
     {
         private TheProjectDbContext db = new TheProjectDbContext();
 
-        // GET: CityViewModels
+        // GET: CarsParts
         public ActionResult Index()
         {
-            return View(db.CityViewModels.ToList());
+            var carsParts = db.CarsParts.Include(c => c.Location);
+            return View(carsParts.ToList());
         }
 
-        // GET: CityViewModels/Details/5
+        // GET: CarsParts/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CityViewModel cityViewModel = db.CityViewModels.Find(id);
-            if (cityViewModel == null)
+            CarsParts carsParts = db.CarsParts.Find(id);
+            if (carsParts == null)
             {
                 return HttpNotFound();
             }
-            return View(cityViewModel);
+            return View(carsParts);
         }
 
-        // GET: CityViewModels/Create
+        // GET: CarsParts/Create
         public ActionResult Create()
         {
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "ZipCode");
             return View();
         }
 
-        // POST: CityViewModels/Create
+        // POST: CarsParts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CreatedTime,UpdatedTime")] CityViewModel cityViewModel)
+        public ActionResult Create([Bind(Include = "Id,Name,About,Price,inStoke,Order,LocationId,CreatedTime,UpdatedTime")] CarsParts carsParts)
         {
             if (ModelState.IsValid)
             {
-                db.CityViewModels.Add(cityViewModel);
+                db.CarsParts.Add(carsParts);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cityViewModel);
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "ZipCode", carsParts.LocationId);
+            return View(carsParts);
         }
 
-        // GET: CityViewModels/Edit/5
+        // GET: CarsParts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CityViewModel cityViewModel = db.CityViewModels.Find(id);
-            if (cityViewModel == null)
+            CarsParts carsParts = db.CarsParts.Find(id);
+            if (carsParts == null)
             {
                 return HttpNotFound();
             }
-            return View(cityViewModel);
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "ZipCode", carsParts.LocationId);
+            return View(carsParts);
         }
 
-        // POST: CityViewModels/Edit/5
+        // POST: CarsParts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CreatedTime,UpdatedTime")] CityViewModel cityViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Name,About,Price,inStoke,Order,LocationId,CreatedTime,UpdatedTime")] CarsParts carsParts)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cityViewModel).State = EntityState.Modified;
+                db.Entry(carsParts).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cityViewModel);
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "ZipCode", carsParts.LocationId);
+            return View(carsParts);
         }
 
-        // GET: CityViewModels/Delete/5
+        // GET: CarsParts/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CityViewModel cityViewModel = db.CityViewModels.Find(id);
-            if (cityViewModel == null)
+            CarsParts carsParts = db.CarsParts.Find(id);
+            if (carsParts == null)
             {
                 return HttpNotFound();
             }
-            return View(cityViewModel);
+            return View(carsParts);
         }
 
-        // POST: CityViewModels/Delete/5
+        // POST: CarsParts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CityViewModel cityViewModel = db.CityViewModels.Find(id);
-            db.CityViewModels.Remove(cityViewModel);
+            CarsParts carsParts = db.CarsParts.Find(id);
+            db.CarsParts.Remove(carsParts);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

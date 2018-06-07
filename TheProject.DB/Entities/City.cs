@@ -6,8 +6,8 @@ namespace TheProject.DB.Entities
 {
     public class City : BaseEntity
     {
+
         [Required,StringLength(20)] 
-        [Index(IsUnique =true)]
 
         public string Name { get; set; }
 

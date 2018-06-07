@@ -39,9 +39,6 @@ namespace TheProject.DataAccess
                 ((BaseEntity)entry.Entity).UpdatedTime = DateTime.UtcNow;
             }
         }
-
-        public DbSet<TheProject.Web.Models.LocationsViewModel> LocationsViewModels { get; set; }
-
-        public DbSet<TheProject.Web.Models.CityViewModel> CityViewModels { get; set; }
+     
     }
 }

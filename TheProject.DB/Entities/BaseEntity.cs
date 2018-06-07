@@ -9,10 +9,12 @@ namespace TheProject.DB.Entities
         [Key]
         public int Id { get; set; }
 
+        
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public System.DateTime CreatedTime { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public System.DateTime UpdatedTime { get; set; }
+        
     }
 }

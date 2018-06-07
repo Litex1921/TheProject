@@ -5,8 +5,9 @@ namespace TheProject.DB.Entities
 {
     public class CarsParts : BaseEntity
     {
-        [Required,Index(IsUnique= true)]
-        public string Name {get; set;}
+        [Required, StringLength(20)]
+        public string Name { get; set; }
+
         [Required]
 
         public string About{ get; set; }

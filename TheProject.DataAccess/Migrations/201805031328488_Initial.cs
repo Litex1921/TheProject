@@ -37,10 +37,10 @@ namespace TheProject.DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 20),
                          Price = c.Int(nullable: false),
-                         About=c.String(nullable: false),
-                        inStoke = c.String(nullable: false),
+                         About=c.String(nullable: false, maxLength: 200),
+                        inStoke = c.String(nullable: false, maxLength: 200),
                          Order = c.Decimal(nullable: false, precision: 18, scale: 2),
                         LocationId = c.Int(nullable: false),
                     })
