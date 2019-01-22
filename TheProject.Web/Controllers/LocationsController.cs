@@ -63,14 +63,14 @@ namespace TheProject.Web.Controllers
         public ActionResult Create()
         {
             IEnumerable<City> cities = uow.CityRepository.GetAll();
-            List<CityViewModel> model = new List<CityViewModel>();
+            List<CityViewModel > model = new List<CityViewModel>();
             foreach (City city in cities)
             {
                 CityViewModel c = new CityViewModel(city);
                 model.Add(c);
             }
 
-            ViewBag.CityId = new SelectList(uow.CityRepository, "Id", "Name");
+            ViewBag.CityId = new SelectList (uow.CityRepository.GetAll(), "Id", "Name");
             return View();
         }
 
